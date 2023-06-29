@@ -1,6 +1,6 @@
 import React from "react";
 import Broadcast from "./events/Broadcast";
-import MoveX from "./motion/moveX";
+import MoveX from "./motion/MoveX";
 import MoveY from "./motion/MoveY";
 
 const fetchComponent = (element, id) => {
