@@ -32,7 +32,7 @@ export default function App() {
         source.droppableId === destination.droppableId
       )
         return;
-      // old_list.splice(destination.index, 0, `${element}`);
+
       let new_list = [...old_list];
       new_list.push(element);
       console.log(old_list);
