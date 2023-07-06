@@ -30,9 +30,11 @@ export default function MidArea() {
   const executeHandler = () => {
     const arr = mid.components;
     arr.forEach((element, i) => {
-      const id_ = element + "-" + "midArea";
-      const comp_ = document.getElementById(id_);
-      eventFire(comp_, "click");
+      setTimeout(() => {
+        const id_ = element + "-" + "midArea";
+        const comp_ = document.getElementById(id_);
+        eventFire(comp_, "click");
+      }, 1000 * i);
     });
   };
 

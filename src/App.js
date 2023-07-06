@@ -5,6 +5,7 @@ import PreviewArea from "./components/PreviewArea";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import { updateList } from "./Redux/midAreaSlice";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   const midArea = useSelector((store) => store.midArea);
@@ -17,13 +18,13 @@ export default function App() {
     const destination = result.destination;
     const element = result.draggableId.split("-")[0];
     let old_list = midArea.components;
-    console.log(old_list);
+    // console.log(old_list);
     if (source.droppableId === "midArea") {
-      if (old_list.length === 1) updateHandler([]);
-      else {
+      if (old_list.length === 1 && destination === null) updateHandler([]);
+      else if (destination === null) {
         let new_list = [...old_list];
         new_list.splice(source.index, 1);
-        console.log(new_list);
+        // console.log(new_list);
         updateHandler(new_list);
       }
     } else {
@@ -57,6 +58,7 @@ export default function App() {
           </div>
         </div>
       </DragDropContext>
+      <ToastContainer />
     </div>
   );
 }

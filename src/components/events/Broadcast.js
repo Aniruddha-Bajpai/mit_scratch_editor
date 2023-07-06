@@ -29,7 +29,6 @@ const Broadcast = ({ id }) => {
           Broadcast {`${message}`}
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };
