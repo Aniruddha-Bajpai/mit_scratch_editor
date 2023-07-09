@@ -1,5 +1,4 @@
 import React from "react";
-import Icon from "./Icon";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { motion, event } from "../SidebarComps";
 import fetchComponent from "./fetchComponent";

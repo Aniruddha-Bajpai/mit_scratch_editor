@@ -10,34 +10,82 @@ import { ToastContainer } from "react-toastify";
 export default function App() {
   const midArea = useSelector((store) => store.midArea);
   const dispatch = useDispatch();
-  const updateHandler = (list) => {
-    dispatch(updateList(list));
-  };
   const onDragEnd = (result) => {
-    const source = result.source;
-    const destination = result.destination;
-    const element = result.draggableId.split("-")[0];
-    let old_list = midArea.components;
-    // console.log(old_list);
-    if (source.droppableId === "midArea") {
-      if (old_list.length === 1 && destination === null) updateHandler([]);
-      else if (destination === null) {
-        let new_list = [...old_list];
-        new_list.splice(source.index, 1);
-        // console.log(new_list);
-        updateHandler(new_list);
-      }
-    } else {
-      if (
-        destination === null &&
-        source.droppableId === destination.droppableId
-      )
-        return;
+    let destination = result.destination;
+    let source = result.source;
+    if (
+      (source.droppableId.split("-")[1] === "midArea" &&
+        destination === null) ||
+      (source.droppableId.split("-")[1] === "midArea" &&
+        destination.droppableId.split("-")[1] === "sidebar")
+    ) {
+      let allList = [...midArea.midAreaLists];
+      const target_index_list = source.droppableId.split("-")[0];
+      let target_list = [...allList[target_index_list].components];
+      target_list.splice(source.index, 1);
+      allList[target_index_list] = {
+        ...allList[target_index_list],
+        components: target_list,
+      };
+      dispatch(updateList(allList));
+    }
 
-      let new_list = [...old_list];
-      new_list.push(element);
-      console.log(old_list);
-      updateHandler(new_list);
+    // when component is drag in its own container
+    else if (
+      (source.droppableId.split("-")[1] === "sidebar" &&
+        destination === null) ||
+      (destination.droppableId.split("-")[1] === "sidebar" &&
+        source.droppableId.split("-")[1] === "sidebar")
+    )
+      return;
+    else if (
+      destination.droppableId.split("-")[0] !==
+        source.droppableId.split("-")[0] &&
+      destination.droppableId.split("-")[1] == "midArea" &&
+      source.droppableId.split("-")[1] == "midArea"
+    ) {
+      let allList = [...midArea.midAreaLists];
+      const source_index_midlist = source.droppableId.split("-")[0];
+      const dest_index_midlist = destination.droppableId.split("-")[0];
+      let dest_mid_list = [...allList[dest_index_midlist].components];
+      let source_mid_list = [...allList[source_index_midlist].components];
+      const element_indx_source = source.index;
+      const element_indx_dest = destination.index;
+      // operation to remove element from source and add it to
+      let targetElement = source_mid_list.splice(element_indx_source, 1);
+      dest_mid_list.splice(element_indx_dest, 0, targetElement[0]);
+      allList[source_index_midlist] = {
+        ...allList[source_index_midlist],
+        components: source_mid_list,
+      };
+      allList[dest_index_midlist] = {
+        ...allList[dest_index_midlist],
+        components: dest_mid_list,
+      };
+      dispatch(updateList(allList));
+    } else if (
+      source.droppableId.split("-")[1] === "sidebar" &&
+      destination.droppableId.split("-")[1] === "midArea"
+    ) {
+      let allList = [...midArea.midAreaLists];
+      let element = result.draggableId.split("-")[0];
+      console.log(element);
+      const target_indx_list = destination.droppableId.split("-")[0];
+      const element_dest_index = destination.index;
+
+      // console.log(destination);
+      // console.log(source);
+      // console.log(result.draggableId.split("-"));
+
+      let target_list = [...allList[target_indx_list].components];
+      target_list.splice(element_dest_index, 0, element);
+      // target_list.push(element);
+      allList[target_indx_list] = {
+        ...allList[target_indx_list],
+        components: target_list,
+      };
+
+      dispatch(updateList(allList));
     }
   };
 
@@ -46,7 +94,6 @@ export default function App() {
       <DragDropContext
         onDragEnd={(result) => {
           onDragEnd(result);
-          console.log(result);
         }}
       >
         <div className="h-screen overflow-hidden flex flex-row  ">

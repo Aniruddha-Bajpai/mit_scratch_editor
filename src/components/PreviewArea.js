@@ -9,10 +9,10 @@ export default function PreviewArea() {
       <div className="w-20 rounded-lg h-10 bg-gray-200 text-center py-2">
         Sidebar
       </div>
-      <div className="relative w-full">
+      <div className="relative w-full border h-full">
         {character.sprites.map((char, i) => {
           return (
-            <div className="absolute" id={char} key={`${char}-${i}`}>
+            <div className="absolute border" id={char.id} key={`${char}-${i}`}>
               <CatSprite />
             </div>
           );
