@@ -9,7 +9,6 @@ function MoveX({ id }) {
   const positionCalX = useRef(0);
   useEffect(() => {
     const sprite = character.sprites.filter((s) => s.id === character.active);
-    // console.log(sprite);
     positionCalX.current = parseInt(sprite[0].positionX);
   }, [character.active]);
   const [moveState, setMoveState] = useState(0);

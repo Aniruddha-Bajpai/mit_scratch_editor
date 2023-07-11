@@ -72,11 +72,6 @@ export default function App() {
       console.log(element);
       const target_indx_list = destination.droppableId.split("-")[0];
       const element_dest_index = destination.index;
-
-      // console.log(destination);
-      // console.log(source);
-      // console.log(result.draggableId.split("-"));
-
       let target_list = [...allList[target_indx_list].components];
       target_list.splice(element_dest_index, 0, element);
       // target_list.push(element);

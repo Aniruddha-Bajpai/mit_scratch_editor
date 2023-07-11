@@ -40,7 +40,6 @@ export default function MidArea() {
         const id_ = e + "-" + mid.active + "-" + i;
         const comp_ = document.getElementById(id_);
         console.log(comp_);
-        // console.log(id);
         eventFire(comp_, "click");
       }, 1000 * i);
     });
